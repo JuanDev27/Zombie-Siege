@@ -13,4 +13,14 @@ public class EnemyController : MonoBehaviour
     {
         
     }
+
+    //Detectar colisiones con el jugador
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Vector2 playerPosition = collision.transform.position;
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(playerPosition, 1); //Daño 1
+        }
+    }
 }
