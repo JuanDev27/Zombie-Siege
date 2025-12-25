@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 8f;
+    public float speed = 10f;
     private Transform target;
     public int damage = 5; // Daño que causa el proyectil
     private EnemyController enemy;

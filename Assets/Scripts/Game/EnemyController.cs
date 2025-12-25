@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public int enemyLife = 20;
+    private MoneySystem money;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,7 +31,10 @@ public class EnemyController : MonoBehaviour
     }
     void Die()
     {
+        money = GameObject.FindFirstObjectByType<MoneySystem>();
         // Destruir enemigo
         Destroy(gameObject);
+        //Dar dinero
+        money.AddMoney(10); 
     }
 }

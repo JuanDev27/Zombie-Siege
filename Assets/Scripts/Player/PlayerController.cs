@@ -5,12 +5,11 @@ using System.Collections.Generic;
 public class PlayerController : MonoBehaviour
 {
     public GameObject bulletPrefab;
-    public float recoil = 3f; // segundos entre disparos
+    private float recoil = 0.5f; // segundos entre disparos
     private bool takingDamage = false;
     public float damageCooldown = 0.5f; // Invulnerabilidad después de recibir daño
     private Rigidbody2D rb;
     public int life = 20;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,8 +20,17 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            Shoot();
-            yield return new WaitForSeconds(recoil);
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            if (enemies.Length > 0)
+            {
+                Shoot();
+                yield return new WaitForSeconds(recoil);
+            }
+            else
+        {
+            yield return null; 
+        }
         }
     }
 
