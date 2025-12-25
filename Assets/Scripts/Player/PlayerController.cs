@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public float recoil = 3f; // segundos entre disparos
     private bool takingDamage = false;
-    public float damageCooldown = 0.5f; // 0.5 segundos de invulnerabilidad después de recibir daño
+    public float damageCooldown = 0.5f; // Invulnerabilidad después de recibir daño
     private Rigidbody2D rb;
     public int life = 20;
 
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         // Mostrar pantalla Game Over
         //gameOverPanel.SetActive(true);
 
-        // Opcional: desactivar al jugador
+        // Desactivar al jugador
         gameObject.SetActive(false);
     }
     IEnumerator DamageCooldown()

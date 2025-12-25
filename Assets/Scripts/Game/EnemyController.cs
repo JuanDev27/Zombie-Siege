@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public int enemyLife = 20;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -11,7 +12,10 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (enemyLife <= 0)
+            {
+                Die();
+            }
     }
 
     //Detectar colisiones con el jugador
@@ -22,5 +26,11 @@ public class EnemyController : MonoBehaviour
             Vector2 playerPosition = collision.transform.position;
             collision.gameObject.GetComponent<PlayerController>().TakeDamage(playerPosition, 1); //Daño 1
         }
+        Debug.Log("Enemy Life: " + enemyLife);
+    }
+    void Die()
+    {
+        // Destruir enemigo
+        Destroy(gameObject);
     }
 }

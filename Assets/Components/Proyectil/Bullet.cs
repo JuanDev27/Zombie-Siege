@@ -4,7 +4,8 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 8f;
     private Transform target;
-
+    public int damage = 5; // Daño que causa el proyectil
+    private EnemyController enemy;
     public void Init()
     {
         FindNearestEnemy();
@@ -20,6 +21,8 @@ public class Bullet : MonoBehaviour
         // Si llega al enemigo
         if (Vector2.Distance(transform.position, target.position) < 0.1f)
         {
+
+            enemy.enemyLife -= damage; 
             Destroy(gameObject);
         }
     }
@@ -44,16 +47,7 @@ public class Bullet : MonoBehaviour
         if (nearestEnemy != null)
         {
             target = nearestEnemy.transform;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            // Aquí puedes aplicar daño
-            Destroy(collision.gameObject);
-            Destroy(gameObject); 
+            enemy = nearestEnemy.GetComponent<EnemyController>();
         }
     }
 }
