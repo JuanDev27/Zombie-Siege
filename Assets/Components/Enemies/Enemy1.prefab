@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3699525361318755667}
   - component: {fileID: 4321203108639579777}
   - component: {fileID: 3300569306867012547}
-  - component: {fileID: 2365741424956570951}
+  - component: {fileID: 5130466852380447336}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Enemy
@@ -185,7 +185,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
---- !u!114 &2365741424956570951
+--- !u!114 &5130466852380447336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

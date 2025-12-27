@@ -2,14 +2,16 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    //Stats
     public int enemyLife = 20;
     private MoneySystem money;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    private SpawnEnemies spawnEnemies;
 
+    private void Start()
+    {
+        spawnEnemies = GameObject.FindFirstObjectByType<SpawnEnemies>();
+        money = GameObject.FindFirstObjectByType<MoneySystem>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -29,12 +31,17 @@ public class EnemyController : MonoBehaviour
         }
         Debug.Log("Enemy Life: " + enemyLife);
     }
-    void Die()
+    private void Die()
     {
-        money = GameObject.FindFirstObjectByType<MoneySystem>();
-        // Destruir enemigo
-        Destroy(gameObject);
         //Dar dinero
         money.AddMoney(10); 
+        spawnEnemies.SetEnemiesLeft();
+        // Destruir enemigo
+        Destroy(gameObject);
+    }
+
+    public void SetEnemyLife(int life)
+    {
+        enemyLife = life;
     }
 }

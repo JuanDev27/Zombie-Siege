@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
         if (Vector2.Distance(transform.position, target.position) < 0.1f)
         {
 
-            enemy.enemyLife -= damage; 
+            enemy.SetEnemyLife(enemy.enemyLife - damage);
             Destroy(gameObject);
         }
     }
