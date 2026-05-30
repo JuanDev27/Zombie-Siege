@@ -24,6 +24,7 @@ public class SpawnEnemies : MonoBehaviour
         maxY = puntosSpawn.Max(puntosSpawn => puntosSpawn.position.y);
         minY = puntosSpawn.Min(puntosSpawn => puntosSpawn.position.y);
         enemiesLeft = totalEnemies;
+        UpdateWaveUI();
     }
 
     private void Update()
@@ -65,7 +66,15 @@ public class SpawnEnemies : MonoBehaviour
         wave++;
         totalEnemies = Mathf.RoundToInt(totalEnemies * (1 + (wave - 1) * 0.2f));
         enemiesLeft = totalEnemies;
-        Debug.Log("Wave:" + wave);
+        UpdateWaveUI();
+    }
+
+    void UpdateWaveUI()
+    {
+        if (waveText != null)
+        {
+            waveText.text = "Wave: " + wave;
+        }
     }
 
 }
