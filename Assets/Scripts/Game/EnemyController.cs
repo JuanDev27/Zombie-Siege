@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -11,35 +12,31 @@ public class EnemyController : MonoBehaviour
     private MoneySystem money;
     private SpawnEnemies spawnEnemies;
 
-    //Stats old
-    //public int enemyLife = 20;
+
+    private PlayerController playerController;
+
+    [Header("UI")]
+    [SerializeField] private Image healthBarFill;
 
     private void Start()
     {
         currentLife = maxLife;
         spawnEnemies = GameObject.FindFirstObjectByType<SpawnEnemies>();
         money = GameObject.FindFirstObjectByType<MoneySystem>();
+        playerController = GameObject.FindFirstObjectByType<PlayerController>();
 
         if (EnemyManager.Instance != null)
         {
         EnemyManager.Instance.RegisterEnemySpawn();
         }
+        ActualizarBarraVida();
     }
-
-    // Update is called once per frame (old)
-    //void Update()
-    //{
-      //  if (enemyLife <= 0)
-        //    {
-          //      Die();
-            //}
-    //}
 
     // Método para recibir daño y actualizar la vida del enemigo hasta que muera
     public void TakeDamage(int damage)
     {
         currentLife -= damage;
-        Debug.Log("Enemy Life: " + currentLife);
+        ActualizarBarraVida();
 
         if (currentLife <= 0)
         {
@@ -59,18 +56,41 @@ public class EnemyController : MonoBehaviour
                 player.TakeDamage(collision.transform.position, damageToPlayer);
             }
         }
-        Debug.Log("Enemy Life: " + currentLife);
+        ActualizarBarraVida();
+    }
+
+// Nueva función encargada de hacer el cálculo matemático para "desllenar" la barra
+    private void ActualizarBarraVida()
+    {
+        if (healthBarFill != null)
+        {
+            // El Fill Amount va de 0.0 a 1.0, por lo que dividimos la vida actual entre la máxima.
+            // Usamos (float) para que Unity haga la división con decimales exactos.
+            healthBarFill.fillAmount = (float)currentLife / maxLife;
+        }
     }
 
     private void Die()
     {
         //Dar dinero
         if (money != null) money.AddMoney(moneyReward); 
+        //Dar xp
+        if (playerController != null)
+        {
+            float xp_enemy = Random_xp();
+            playerController.Level_up(xp_enemy);
+        }
         if (EnemyManager.Instance != null)
         {
         EnemyManager.Instance.RegisterEnemyDeath();
         }
         // Destruir enemigo
         Destroy(gameObject);
+    }
+
+    float Random_xp()
+    {
+        float xp = Random.Range(1, 7); //El 7 no se incluye es como [1,7) se toma hasta el 6
+        return xp;
     }
 }

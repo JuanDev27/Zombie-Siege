@@ -10,7 +10,12 @@ public class PlayerController : MonoBehaviour
     [Header("Health & Defense")]
     public int life = 20;
     [SerializeField] private float damageCooldown = 0.5f; // Invulnerabilidad tras recibir daño
-    [SerializeField] private float knockbackForce = 5f;
+    [SerializeField] private float knockbackForce = 25f;
+
+    [Header ("Level up")]
+    public int level = 1;
+    public float xp_now = 0;
+    public float xp_needed = 0; //crear formula que se incremente según el nivel, ej: lvl 1 = 10, lvl 2 = 25,...
 
     private Rigidbody2D rb;
     private SpawnEnemies spawnManager; // Cacheamos el spawner para saber si hay enemigos
@@ -20,7 +25,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        spawnManager = GameObject.FindFirstObjectByType<SpawnEnemies>();
 
         StartCoroutine(AutoShoot());
     }
@@ -97,5 +101,24 @@ public class PlayerController : MonoBehaviour
 
         // Desactivar al jugador
         gameObject.SetActive(false);
+    }
+
+    public void Level_up(float xp)
+    {
+        xp_now += xp;
+        if(xp_now >= xp_needed)
+        {
+            level += 1;
+            xp_now = 0;
+            xp_needed = level * 10; //Formula temp de xp necesaria
+            Update_stats(); //Llamar función para actualizar al subir de nivel las stats
+        }
+    }
+
+    void Update_stats()
+    {
+        //Vida
+        life = level * 20; //Formula temp de vida(a futuro incrementar con 25% o algo asi)
+        //
     }
 }

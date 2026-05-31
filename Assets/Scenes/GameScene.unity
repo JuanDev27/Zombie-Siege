@@ -152,9 +152,9 @@ MonoBehaviour:
   - {fileID: 1066934042}
   - {fileID: 1074683870}
   enemies:
-  - {fileID: 7898843650518483055, guid: fe9135f2de3de2645ab72abeba0e6071, type: 3}
-  - {fileID: 7898843650518483055, guid: 67f32d16c42068a4380fc837affd53a9, type: 3}
-  - {fileID: 7898843650518483055, guid: b1207e9642c611b46ab10c5fbab20747, type: 3}
+  - {fileID: 8492377460187962764, guid: 5d9ef286ae4d2874abfd15b31e5ad5b7, type: 3}
+  - {fileID: 8492377460187962764, guid: 812404a58f43e5a42b273304dcc9ade2, type: 3}
+  - {fileID: 8492377460187962764, guid: ad20122b6c9a15c40a2e981a5221fb42, type: 3}
   spawnInterval: 5
 --- !u!4 &89648304
 Transform:
@@ -911,8 +911,11 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8107786270260871008, guid: eeca6d405a9591a4f9cecb525b4da274, type: 3}
   recoil: 0.5
   life: 20
-  damageCooldown: 0.5
+  damageCooldown: 1
   knockbackForce: 5
+  level: 1
+  xp_now: 0
+  xp_needed: 0
 --- !u!1 &1056632699
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,9 +966,9 @@ MonoBehaviour:
   - {fileID: 1789330558}
   - {fileID: 588438177}
   enemies:
-  - {fileID: 7898843650518483055, guid: fe9135f2de3de2645ab72abeba0e6071, type: 3}
-  - {fileID: 7898843650518483055, guid: 67f32d16c42068a4380fc837affd53a9, type: 3}
-  - {fileID: 7898843650518483055, guid: b1207e9642c611b46ab10c5fbab20747, type: 3}
+  - {fileID: 8492377460187962764, guid: 5d9ef286ae4d2874abfd15b31e5ad5b7, type: 3}
+  - {fileID: 8492377460187962764, guid: 812404a58f43e5a42b273304dcc9ade2, type: 3}
+  - {fileID: 8492377460187962764, guid: ad20122b6c9a15c40a2e981a5221fb42, type: 3}
   spawnInterval: 5
 --- !u!1 &1066934041
 GameObject:
