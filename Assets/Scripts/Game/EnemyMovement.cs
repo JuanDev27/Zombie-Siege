@@ -1,12 +1,13 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [Header("Movement Settings")]
+    [SerializeField] private float speed = 3f;
+
     private Rigidbody2D rb2D;
     private Transform player;
-    [SerializeField] private float speed;
+    //No hacen nada
     [SerializeField] private float distance;
     [SerializeField] private LayerMask groundLayer;
 

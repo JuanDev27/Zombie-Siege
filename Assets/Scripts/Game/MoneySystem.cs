@@ -3,10 +3,10 @@ using TMPro;
 
 public class MoneySystem : MonoBehaviour
 {
+    [SerializeField] public TMP_Text moneyText;
+
     private int money = 0;
     private float bonusMultiplier = 1.0f; // Multiplicador de bonificación
-    public TMP_Text moneyText;
-
 
     public void AddMoney(int amount)
     {

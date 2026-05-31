@@ -156,8 +156,6 @@ MonoBehaviour:
   - {fileID: 7898843650518483055, guid: 67f32d16c42068a4380fc837affd53a9, type: 3}
   - {fileID: 7898843650518483055, guid: b1207e9642c611b46ab10c5fbab20747, type: 3}
   spawnInterval: 5
-  waveText: {fileID: 788898691}
-  enemiesLeftText: {fileID: 311304045}
 --- !u!4 &89648304
 Transform:
   m_ObjectHideFlags: 0
@@ -510,6 +508,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1056632700}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &771059420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 771059422}
+  - component: {fileID: 771059421}
+  m_Layer: 0
+  m_Name: EnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &771059421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771059420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2502c22ca3f470d4681c6cff28ad0b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
+  waveText: {fileID: 788898691}
+  enemiesLeftText: {fileID: 311304045}
+--- !u!4 &771059422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771059420}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.91973, y: -0.3877, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &788898689
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,7 +882,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &997156775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,8 +909,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
   bulletPrefab: {fileID: 8107786270260871008, guid: eeca6d405a9591a4f9cecb525b4da274, type: 3}
-  damageCooldown: 0.5
+  recoil: 0.5
   life: 20
+  damageCooldown: 0.5
+  knockbackForce: 5
 --- !u!1 &1056632699
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,8 +967,6 @@ MonoBehaviour:
   - {fileID: 7898843650518483055, guid: 67f32d16c42068a4380fc837affd53a9, type: 3}
   - {fileID: 7898843650518483055, guid: b1207e9642c611b46ab10c5fbab20747, type: 3}
   spawnInterval: 5
-  waveText: {fileID: 788898691}
-  enemiesLeftText: {fileID: 311304045}
 --- !u!1 &1066934041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1453,3 +1497,4 @@ SceneRoots:
   - {fileID: 1529955557}
   - {fileID: 1921870215}
   - {fileID: 890455183}
+  - {fileID: 771059422}

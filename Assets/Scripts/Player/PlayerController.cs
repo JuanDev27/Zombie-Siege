@@ -1,18 +1,27 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    private float recoil = 0.5f; // segundos entre disparos
-    private bool takingDamage = false;
-    public float damageCooldown = 0.5f; // Invulnerabilidad después de recibir daño
-    private Rigidbody2D rb;
+    [Header("Combat Settings")]
+    [SerializeField] public GameObject bulletPrefab;
+    [SerializeField] private float recoil = 0.5f;
+
+    [Header("Health & Defense")]
     public int life = 20;
+    [SerializeField] private float damageCooldown = 0.5f; // Invulnerabilidad tras recibir daño
+    [SerializeField] private float knockbackForce = 5f;
+
+    private Rigidbody2D rb;
+    private SpawnEnemies spawnManager; // Cacheamos el spawner para saber si hay enemigos
+    private bool isInvulnerable = false;
+    private bool isKnockedBack = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spawnManager = GameObject.FindFirstObjectByType<SpawnEnemies>();
+
         StartCoroutine(AutoShoot());
     }
 
@@ -20,48 +29,63 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-            if (enemies.Length > 0)
+            if (EnemyManager.Instance != null && EnemyManager.Instance.HasEnemiesInScene())
             {
                 Shoot();
                 yield return new WaitForSeconds(recoil);
             }
             else
         {
-            yield return null; 
+            yield return new WaitForSeconds(0.1f);
         }
         }
     }
 
     void Shoot()
     {
+        if (bulletPrefab == null) return;
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>().Init();
+        bullet.GetComponent<Bullet>()?.Init();
     }
 
-    public void TakeDamage(Vector2 direction,int damage)
+    public void TakeDamage(Vector2 enemyPosition,int damage)
     {
-        if (!takingDamage){
-        //Empuje
-        takingDamage = true;
-        Vector2 pushForce = new Vector2(transform.position.x -direction.x, transform.position.y - direction.y).normalized;
-        rb.AddForce(pushForce,ForceMode2D.Impulse);
-        //Daño
+        if (isInvulnerable) return;
         life -= damage;
-        StartCoroutine(DamageCooldown());
-        //Muerte
-        if (life <= 0)
-            {
-                Die();
-            }
-        }
         Debug.Log("Player Life: " + life);
+
+        if (life <= 0)
+        {
+            Die();
+            return;
+        }
+
+        // Aplicar Knockback de forma efectiva
+        StartCoroutine(KnockbackRoutine(enemyPosition));
     }
 
-    public void disableDamage(){
-        takingDamage = false;
+    IEnumerator KnockbackRoutine(Vector2 enemyPosition)
+    {
+        isInvulnerable = true;
+        isKnockedBack = true;
+
+        // Calcular dirección opuesta al enemigo
+        Vector2 pushDirection = ((Vector2)transform.position - enemyPosition).normalized;
+        
+        // Aplicar fuerza física real
+        rb.linearVelocity = Vector2.zero; // Limpiamos velocidades previas
+        rb.AddForce(pushDirection * knockbackForce, ForceMode2D.Impulse);
+
+        // Duración del descontrol por el golpe (0.15 segundos de empuje puro)
+        yield return new WaitForSeconds(0.15f);
+        isKnockedBack = false;
+
+        // Esperar el resto del tiempo de invulnerabilidad
+        yield return new WaitForSeconds(damageCooldown - 0.15f);
+        isInvulnerable = false;
     }
+
+    public bool CanMove() => !isKnockedBack;
 
     void Die()
     {
@@ -73,10 +97,5 @@ public class PlayerController : MonoBehaviour
 
         // Desactivar al jugador
         gameObject.SetActive(false);
-    }
-    IEnumerator DamageCooldown()
-    {
-        yield return new WaitForSeconds(damageCooldown);
-        takingDamage = false;
     }
 }

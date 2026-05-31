@@ -198,7 +198,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616e1eb599c6e8846b25ae09c6614f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  enemyLife: 20
+  maxLife: 20
+  moneyReward: 10
+  damageToPlayer: 1
+  currentLife: 0
 --- !u!114 &-6621373187464195726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,4 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616e1eb599c6e8846b25ae09c6614f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  enemyLife: 20
+  maxLife: 20
+  moneyReward: 10
+  damageToPlayer: 1
+  currentLife: 0

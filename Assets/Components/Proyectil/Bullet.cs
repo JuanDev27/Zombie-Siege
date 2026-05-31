@@ -13,8 +13,10 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        if (target == null) return;
-
+        if (target == null) {
+            Destroy(gameObject);
+            return;
+        }
         Vector2 direction = (target.position - transform.position).normalized;
         transform.position += (Vector3)direction * speed * Time.deltaTime;
 
@@ -22,7 +24,7 @@ public class Bullet : MonoBehaviour
         if (Vector2.Distance(transform.position, target.position) < 0.1f)
         {
 
-            enemy.SetEnemyLife(enemy.enemyLife - damage);
+            enemy.TakeDamage(damage);
             Destroy(gameObject);
         }
     }
