@@ -84,6 +84,8 @@ public class EnemyController : MonoBehaviour
         {
         EnemyManager.Instance.RegisterEnemyDeath();
         }
+        //Actualizar XP Bar del jugador al matar un enemigo
+        playerController.ActualizarXpBar();
         // Destruir enemigo
         Destroy(gameObject);
     }

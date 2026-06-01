@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +19,11 @@ public class PlayerController : MonoBehaviour
     public float xp_now = 0;
     public float xp_needed = 0; //crear formula que se incremente según el nivel, ej: lvl 1 = 10, lvl 2 = 25,...
 
+    [Header("UI XP")]
+    [SerializeField] private Image xpBarFill;
+    [SerializeField] public TMP_Text xpText;
+    [SerializeField] public TMP_Text lvlText;
+
     private Rigidbody2D rb;
     private SpawnEnemies spawnManager; // Cacheamos el spawner para saber si hay enemigos
     private bool isInvulnerable = false;
@@ -27,6 +34,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         StartCoroutine(AutoShoot());
+        ActualizarXpBar();
     }
 
     IEnumerator AutoShoot()
@@ -112,6 +120,8 @@ public class PlayerController : MonoBehaviour
             xp_now = 0;
             xp_needed = level * 10; //Formula temp de xp necesaria
             Update_stats(); //Llamar función para actualizar al subir de nivel las stats
+            lvlText.text = "LVL: " + level.ToString(); //Actualizar UI de nivel
+            ActualizarXpBar(); //Actualizar a estado vacio despues de subir de lvl
         }
     }
 
@@ -120,5 +130,15 @@ public class PlayerController : MonoBehaviour
         //Vida
         life = level * 20; //Formula temp de vida(a futuro incrementar con 25% o algo asi)
         //
+    }
+
+    //Llenar XP bar
+    public void ActualizarXpBar()
+    {
+        if (xpBarFill != null)
+        {
+            xpBarFill.fillAmount = (float)xp_now / xp_needed;
+            xpText.text = "XP: " + xp_now.ToString() + "/" + xp_needed;
+        }
     }
 }
