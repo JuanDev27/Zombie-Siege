@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public int life = 20;
     [SerializeField] private float damageCooldown = 0.5f; // Invulnerabilidad tras recibir daño
     [SerializeField] private float knockbackForce = 25f;
+    [SerializeField] public TMP_Text lifeText;
 
     [Header ("Level up")]
     public int level = 1;
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(AutoShoot());
         ActualizarXpBar();
+        //Vida inicial
+        lifeText.text = life.ToString();
     }
 
     IEnumerator AutoShoot()
@@ -64,7 +67,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isInvulnerable) return;
         life -= damage;
-        Debug.Log("Player Life: " + life);
+        lifeText.text = life.ToString();
 
         if (life <= 0)
         {
@@ -120,6 +123,8 @@ public class PlayerController : MonoBehaviour
             xp_now = 0;
             xp_needed = level * 10; //Formula temp de xp necesaria
             Update_stats(); //Llamar función para actualizar al subir de nivel las stats
+            //Actualizar vida
+            lifeText.text = life.ToString();
             lvlText.text = "LVL: " + level.ToString(); //Actualizar UI de nivel
             ActualizarXpBar(); //Actualizar a estado vacio despues de subir de lvl
         }
