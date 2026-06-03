@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,6 +25,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Image xpBarFill;
     [SerializeField] public TMP_Text xpText;
     [SerializeField] public TMP_Text lvlText;
+
+    [Header("Panels UI")]
+    [Tooltip("Arrastra aquí el panel con la vida, XP, etc., para poder ocultarlo al morir.")]
+    [SerializeField] private GameObject panelHUD;
+    
+    [Tooltip("Arrastra aquí tu panel oculto de Game Over.")]
+    [SerializeField] private GameObject panelGameOver;
 
     private Rigidbody2D rb;
     private SpawnEnemies spawnManager; // Cacheamos el spawner para saber si hay enemigos
@@ -95,11 +103,13 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
         isKnockedBack = false;
 
-        // Esperar el resto del tiempo de invulnerabilidad
-        yield return new WaitForSeconds(damageCooldown - 0.15f);
+        // Esperar el resto del tiempo configurado en el inspector para quitar la invulnerabilidad
+        float remainingCooldown = Mathf.Max(0f, damageCooldown - 0.15f);
+        yield return new WaitForSeconds(remainingCooldown);
         isInvulnerable = false;
     }
 
+    public bool IsInvulnerable() => isInvulnerable;
     public bool CanMove() => !isKnockedBack;
 
     void Die()
@@ -108,6 +118,8 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 0f;
 
         // Mostrar pantalla Game Over
+        panelHUD.SetActive(false);
+        panelGameOver.SetActive(true);
         //gameOverPanel.SetActive(true);
 
         // Desactivar al jugador

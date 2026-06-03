@@ -33,21 +33,33 @@ public class SpawnEnemies : MonoBehaviour
         if (timer >= spawnInterval)
         {
             timer = 0f;
-            TrySpawnEnemy();
+            TrySpawnGroup();
         }
     }
 
-    void TrySpawnEnemy()
+    void TrySpawnGroup()
     {
         if (EnemyManager.Instance == null) return;
 
-        // Le pedimos permiso al Manager Central. Si la ola aún necesita enemigos, nos dará el 'true'
-        if (EnemyManager.Instance.CanSpawnEnemy())
+        // Le preguntamos al Manager cuántos enemigos tenemos permitidos soltar en este grupo
+        int amountToSpawn = EnemyManager.Instance.GetSpawnAmountAllowed();
+
+        // Hacemos un ciclo para instanciar exactamente esa cantidad de enemigos a la vez
+        for (int i = 0; i < amountToSpawn; i++)
         {
-            int numberOfEnemies = Random.Range(0, enemies.Length); 
-            Vector2 spawnPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-            
-            Instantiate(enemies[numberOfEnemies], spawnPosition, Quaternion.identity);
+            SpawnEnemy();
         }
+    }
+
+    void SpawnEnemy()
+    {
+        
+        // Instancia el enemigo
+        int typeOfEnemies = Random.Range(0, enemies.Length); 
+        Vector2 spawnPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+            
+        Instantiate(enemies[typeOfEnemies], spawnPosition, Quaternion.identity);
+        // Avisa al manager que nació (Esto ya lo tenías mapeado)
+        EnemyManager.Instance.RegisterEnemySpawn();
     }
 }

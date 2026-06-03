@@ -46,14 +46,14 @@ public class EnemyController : MonoBehaviour
 
 
     //Detectar colisiones con el jugador
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             if (player != null)
             {
-                player.TakeDamage(collision.transform.position, damageToPlayer);
+                player.TakeDamage(transform.position, damageToPlayer);
             }
         }
         ActualizarBarraVida();
