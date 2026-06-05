@@ -4,16 +4,13 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : PlayerSelection
 {
-    [Header("Combat Settings")]
-    [SerializeField] public GameObject bulletPrefab;
-    [SerializeField] private float recoil = 0.5f;
 
-    [Header("Health & Defense")]
-    public int life = 20;
-    [SerializeField] private float damageCooldown = 0.5f; // Invulnerabilidad tras recibir daño
-    [SerializeField] private float knockbackForce = 25f;
+    [Header("Combat")]
+    [SerializeField] public GameObject bulletPrefab;
+
+    [Header("UI Health & Defense")]
     [SerializeField] public TMP_Text lifeText;
 
     [Header ("Level up")]
