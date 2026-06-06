@@ -453,6 +453,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   maxLife: 20
   moneyReward: 10
-  damageToPlayer: 1
+  damageToPlayer: 15
   currentLife: 0
   healthBarFill: {fileID: 178504518349914603}

@@ -71,7 +71,15 @@ public class PlayerController : PlayerSelection
     public void TakeDamage(Vector2 enemyPosition,int damage)
     {
         if (isInvulnerable) return;
-        life -= damage;
+        //Si el daño es mayor a la defensa
+        if((damage - defense) > 0 )
+        {
+            life = life - (damage - defense);
+        }
+        else
+        {
+            life = life - 1; //Sino daño minimo
+        }
         lifeText.text = life.ToString();
 
         if (life <= 0)
@@ -131,7 +139,7 @@ public class PlayerController : PlayerSelection
             level += 1;
             xp_now = 0;
             xp_needed = level * 10; //Formula temp de xp necesaria
-            Update_stats(); //Llamar función para actualizar al subir de nivel las stats
+            LevelUp_stats(); //Llamar función para actualizar al subir de nivel las stats
             //Actualizar vida
             lifeText.text = life.ToString();
             lvlText.text = "LVL: " + level.ToString(); //Actualizar UI de nivel
@@ -139,11 +147,24 @@ public class PlayerController : PlayerSelection
         }
     }
 
-    void Update_stats()
+    void LevelUp_stats()
     {
         //Vida
         life = level * 20; //Formula temp de vida(a futuro incrementar con 25% o algo asi)
         //
+    }
+
+    //Update stats
+    public void UpdateDef()
+    {
+        defense++;
+    }
+
+    //Skills(FALTA AQUI)
+
+    public void UpdateDMG()
+    {
+        bulletPrefab.GetComponent<Bullet>().UpdateDMG();
     }
 
     //Llenar XP bar

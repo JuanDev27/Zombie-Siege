@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
     [Header("Enemy Settings")]
     [SerializeField] private int maxLife = 20;
     [SerializeField] private int moneyReward = 10;
-    [SerializeField] private int damageToPlayer = 1;
+    [SerializeField] private int damageToPlayer = 5;
 
     public int currentLife;
     private MoneySystem money;

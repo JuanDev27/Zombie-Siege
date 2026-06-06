@@ -5,7 +5,7 @@ public class MoneySystem : MonoBehaviour
 {
     [SerializeField] public TMP_Text moneyText;
 
-    private int money = 0;
+    public int money = 0;
     private float bonusMultiplier = 1.0f; // Multiplicador de bonificación
 
     public void AddMoney(int amount)
@@ -13,11 +13,15 @@ public class MoneySystem : MonoBehaviour
         int totalAmount = Mathf.RoundToInt(amount * bonusMultiplier);
         money += totalAmount;
     }
-    public void SubstractMoney(int amount)
+    public int SubstractMoney(int amount)
     {
+        if(money < amount)
+        {
+            return 0; //No hay suficiente dinero
+        }
+        //Sino, descontar
         money -= amount;
-        if (money < 0) money = 0;
-        Debug.Log("Dinero actual: " + money);
+        return 1; //Exito
     }
     public int GetMoney()
     {

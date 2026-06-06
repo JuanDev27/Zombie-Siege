@@ -11,6 +11,10 @@ public class Bullet : MonoBehaviour
         FindNearestEnemy();
     }
 
+    public void UpdateDMG()
+    {
+        damage++;
+    }
     void Update()
     {
         if (target == null) {

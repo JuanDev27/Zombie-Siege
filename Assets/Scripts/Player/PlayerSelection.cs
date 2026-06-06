@@ -10,5 +10,6 @@ public class PlayerSelection : MonoBehaviour
     public int life = 20;
     [SerializeField] protected float damageCooldown = 0.5f; // Invulnerabilidad tras recibir daño
     [SerializeField] protected float knockbackForce = 25f;
+    public int defense = 1; //Reduce daño
 
 }
