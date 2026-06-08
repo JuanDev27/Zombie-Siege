@@ -5,6 +5,8 @@ public class ShopSystem : MonoBehaviour
 
     public PlayerController playerController;
     public MoneySystem moneySys;
+    [Header("Panel UI")]
+    [SerializeField] private GameObject shop;
     //Idea: Sistema simple de mejoras: Mejorar arma(más daño), mejorar o comprar armadura(def-escudo) y skills(regeneración,recoil,etc.)
 
     public void armorUpdate()
@@ -36,6 +38,11 @@ public class ShopSystem : MonoBehaviour
         {
             Debug.Log("No tienes suficiente dinero");
         }
+    }
+
+    public void activeShop()
+    {
+        shop.SetActive(true);
     }
 
 }
