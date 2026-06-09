@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {  
-        rb.velocity = moveInput * speed;
+        rb.linearVelocity = moveInput * speed;
 
         if (playerController != null && !playerController.CanMove()) return;
         moveInput = Vector2.zero;
@@ -52,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
         animator.SetBool("isWalking", true);
 
         if(context.canceled)
@@ -61,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("LastInputX",moveInput.x);
             animator.SetFloat("LastInputY",moveInput.y);
         }
+
+        moveInput = context.ReadValue<Vector2>();
         animator.SetFloat("InputX",moveInput.x);
         animator.SetFloat("InputY",moveInput.y);
     }
