@@ -9,9 +9,13 @@ public class PlayerController : PlayerSelection
 
     [Header("Combat")]
     [SerializeField] public GameObject bulletPrefab;
+    Bullet bulletScript;
+    private int damage;
 
     [Header("UI Health & Defense")]
     [SerializeField] public TMP_Text lifeText;
+    [SerializeField] public TMP_Text defenseText;
+    [SerializeField] public TMP_Text attackText;
 
     [Header ("Level up")]
     public int level = 1;
@@ -38,11 +42,20 @@ public class PlayerController : PlayerSelection
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
+        damage = GetDamage();
         StartCoroutine(AutoShoot());
         ActualizarXpBar();
         //Vida inicial
         lifeText.text = life.ToString();
+        defenseText.text = "Defense: " + defense.ToString();
+        attackText.text = "Attack: " + damage.ToString();
+
+    }
+
+    public int GetDamage()
+    {
+        damage = GameManager.Instance.playerDamage;
+        return damage;
     }
 
     IEnumerator AutoShoot()
@@ -65,7 +78,8 @@ public class PlayerController : PlayerSelection
     {
         if (bulletPrefab == null) return;
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>()?.Init();
+        int dañoActual = GameManager.Instance.playerDamage;
+        bullet.GetComponent<Bullet>()?.Init(dañoActual);
     }
 
     public void TakeDamage(Vector2 enemyPosition,int damage)
@@ -158,13 +172,16 @@ public class PlayerController : PlayerSelection
     public void UpdateDef()
     {
         defense++;
+        defenseText.text = "Defense: " + defense.ToString();
     }
 
     //Skills(FALTA AQUI)
 
     public void UpdateDMG()
     {
-        bulletPrefab.GetComponent<Bullet>().UpdateDMG();
+        GameManager.Instance.playerDamage += 1;
+        damage = GetDamage();
+        attackText.text = "Attack: " + damage.ToString();
     }
 
     //Llenar XP bar

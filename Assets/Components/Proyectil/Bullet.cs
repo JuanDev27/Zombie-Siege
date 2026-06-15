@@ -6,15 +6,13 @@ public class Bullet : MonoBehaviour
     private Transform target;
     public int damage = 5; // Daño que causa el proyectil
     private EnemyController enemy;
-    public void Init()
+
+    public void Init(int daño)
     {
+        damage = daño;
         FindNearestEnemy();
     }
 
-    public void UpdateDMG()
-    {
-        damage++;
-    }
     void Update()
     {
         if (target == null) {
